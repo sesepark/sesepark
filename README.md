@@ -46,6 +46,19 @@ Qwen3-ASR 음성 전사와 화자 구분, 문서 인식, 인박스 요약을 기
 
 ---
 
+### 오픈소스 기여
+
+**[headroom](https://github.com/headroomlabs-ai/headroom)** — AI 에이전트용 컨텍스트 압축 레이어 (라이브러리 · 프록시 · MCP)
+[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 메인테이너 승인, 머지 대기
+터미널을 닫으면 SIGTERM이 아니라 **SIGHUP**이 오는데, `claude` 경로만 이 신호를 처리하고
+나머지 도구(codex, aider, cursor 등)가 공유하는 두 경로는 처리하지 않았습니다. 그래서 래퍼가
+`finally: cleanup()`을 실행하지 못한 채 죽고, 프록시가 PID 1로 재부모화되어 포트를 붙든 채
+남았습니다. 코드를 읽다 찾은 게 아니라 **8일 19시간째 살아 있던 유출 프록시**에서 출발했고,
+소스 문자열 매칭이 아니라 실제 자식 프로세스를 SIGHUP으로 종료시켜 누수를 재현하는 테스트를
+함께 넣었습니다.
+
+---
+
 ### 주로 쓰는 것
 
 로봇 · ROS 2 / MoveIt / RealSense · ZED / LeRobot · OpenPI(pi0) / xArm SDK
