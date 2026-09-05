@@ -99,7 +99,7 @@ RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이�
 ### 오픈소스 기여
 
 **[headroom](https://github.com/headroomlabs-ai/headroom)** — AI 에이전트용 컨텍스트 압축 레이어 (라이브러리 · 프록시 · MCP)  
-[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 메인테이너 승인, 머지 대기
+[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 메인테이너 승인, 머지 대기  
 터미널을 닫으면 SIGTERM이 아니라 **SIGHUP**이 오는데, `claude` 경로만 이 신호를 처리하고
 나머지 도구(codex, aider, cursor 등)가 공유하는 두 경로는 처리하지 않았음. 그래서 래퍼가
 `finally: cleanup()`을 실행하지 못한 채 죽고, 프록시가 PID 1로 재부모화되어 포트를 붙든 채
@@ -110,11 +110,11 @@ RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이�
 
 ### 주로 쓰는 것
 
-로봇 · ROS 2 / MoveIt / RealSense · ZED / LeRobot / OpenPI(pi0) / Isaac Lab / xArm SDK / Feetech SDK
-학습 · PyTorch / MLX / LoRA 파인튜닝
-백엔드 · Python · FastAPI · SQLAlchemy · PostgreSQL · Alembic
-프론트 · TypeScript · Next.js · React · three.js
-인프라 · Docker · Caddy · systemd · GitHub Actions · 자체 리눅스 서버 운영
+로봇 · ROS 2 / MoveIt / RealSense · ZED / LeRobot / OpenPI(pi0) / Isaac Lab / xArm SDK / Feetech SDK  
+학습 · PyTorch / MLX / LoRA 파인튜닝  
+백엔드 · Python · FastAPI · SQLAlchemy · PostgreSQL · Alembic  
+프론트 · TypeScript · Next.js · React · three.js  
+인프라 · Docker · Caddy · systemd · GitHub Actions · 자체 리눅스 서버 운영  
 그 외 · Swift · Kotlin
 
 ---
