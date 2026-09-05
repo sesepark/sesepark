@@ -54,7 +54,7 @@ GELLO 리더암과 스마트폰(WebXR)으로 xArm7을 조작하고, 시연을 Le
 pi0(OpenPI) 정책을 학습·재생함. 리더암 엔코더의 초기 offset 오차가 FK 비선형성을 타고 endpoint
 오차로 새는 문제를, 절대 관절값 대신 팔로워 기준 관절에 리더 delta를 더한 "가상 관절"로 해결함.
 제어 루프(30Hz)가 네트워크 왕복 없이 돌도록 xArm7 순기구학을 직접 구현함.
-→ 텔레옵 구현은 [lerobot_robot_ufactory 기여분](https://github.com/sesepark/lerobot_robot_ufactory/tree/xarm7-gello-webxr) (upstream 대비 16파일 / 1,893줄)
+→ 텔레옵 구현은 [lerobot_robot_ufactory 기여분](https://github.com/sesepark/lerobot_robot_ufactory/tree/xarm7-gello-webxr) (upstream 대비 코드 14파일 / +1,811줄)
 
 **[sparkq](https://github.com/sesepark/sparkq)** — DGX Spark의 GPU 하나 앞에 학습을 줄 세우는 작업 큐  
 희소 자원이 GB10 한 장이라 슬롯은 하나임. 통합메모리라 두 학습이 겹치면 OOM으로 깨지는 대신
