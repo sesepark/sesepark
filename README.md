@@ -79,18 +79,19 @@ RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이�
 구성했고, 실제 상위 유입 지역이 전부 태국인 것으로 그 판단이 값을 함. (코드와 수집 데이터는
 비공개, 구조와 판단 근거만 공개)
 
-**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — Apple Silicon 온디바이스 개인 에이전트  
-전부 기기 안에서 도는 Swift 메뉴바 앱(5.3만 줄 · 테스트 480개). 메일·메시지·학교 공지를 **읽기
-전용**으로 모아 브리핑하고, 음성 전사·문서 인식·미디어 처리를 로컬 모델로 처리함. 위 로봇
-파이프라인 전체를 조작하는 원격 콘솔이기도 함. 보안 경계를 관례가 아니라 코드로 강제한 점
+**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — Apple Silicon 개인 에이전트와 로봇 원격 콘솔  
+Swift 메뉴바 앱에서 메일·메시지·학교 공지를 **읽기 전용**으로 모아 브리핑하고, 음성 전사·문서
+인식·미디어 처리를 Mac의 모델과 도구로 처리함. 위 로봇 파이프라인 전체를 조작하고, 학습 서버의
+남는 GPU로 채팅하는 원격 콘솔이기도 함. 보안 경계를 관례가 아니라 코드로 강제한 점
 (전송·수정·삭제 API를 **아예 구현하지 않음**, 메시지 본문을 지시로 해석하지 않음, 쓰기 대상
 페이지 재검증)에 가장 공을 들임.
 
-**[shape-new-web](https://github.com/sesepark/shape-new-web)** — SHAPE 공개 웹사이트이자 내부 운영 시스템  
+**[shape-new-web](https://github.com/snuhumanoid/shape_new_web)** — SHAPE 공개 웹사이트이자 내부 운영 시스템  
 소개 페이지가 아니라 장비 예약·자격 검증·권한 위임·웹 푸시까지 동아리 운영이 실제로 돌아가는
 자리를 웹으로 옮긴 것. 프런트·백엔드·스키마·배포를 단독 개발함. 가장 많은 고민이 들어간 부분은
 **전부 무료 티어 위에서 돌아가게 만드는 것**이었고, Neon 요금이 질의 횟수가 아니라 *깨어 있는
-시간*이라 2단 캐시의 창 길이를 맞추는 식으로 풀었음. → [www.snu-shape.com](https://www.snu-shape.com)
+시간*이라 2단 캐시의 창 길이를 맞추는 식으로 풀었음. 현재는 교육 로드맵과 자료실을 분리하고,
+장비 예약·회원 관리 흐름을 모바일에서도 쓸 수 있게 다듬었음. → [www.snu-shape.com](https://www.snu-shape.com)
 
 **[shamoa-snu-programs](https://github.com/sesepark/shamoa-snu-programs)** — 서울대 해외 프로그램 탐색·추천 앱 (수업 최종 프로젝트)  
 
@@ -99,7 +100,7 @@ RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이�
 ### 오픈소스 기여
 
 **[headroom](https://github.com/headroomlabs-ai/headroom)** — AI 에이전트용 컨텍스트 압축 레이어 (라이브러리 · 프록시 · MCP)  
-[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 메인테이너 승인, 머지 대기  
+[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 2026년 9월 25일 `main`에 머지  
 터미널을 닫으면 SIGTERM이 아니라 **SIGHUP**이 오는데, `claude` 경로만 이 신호를 처리하고
 나머지 도구(codex, aider, cursor 등)가 공유하는 두 경로는 처리하지 않았음. 그래서 래퍼가
 `finally: cleanup()`을 실행하지 못한 채 죽고, 프록시가 PID 1로 재부모화되어 포트를 붙든 채
