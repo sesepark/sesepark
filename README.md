@@ -62,6 +62,14 @@ pi0(OpenPI) 정책을 학습·재생함. 리더암 엔코더의 초기 offset �
 끝났는지가 아니라 `nvidia-smi`에 컴퓨트 프로세스가 하나도 없는지를 보고 다음을 꺼냄. 표준
 라이브러리만 쓰고 상태는 전부 파일임.
 
+**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — 시연 확인부터 Spark 학습·정책 실행까지 잇는 맥 앱
+
+SO-ARM101에서 찍은 시연을 회차별 영상과 관절 곡선으로 확인하고, 수집 속도·중복 프레임·추종
+오차 같은 품질 지표를 본 뒤 데이터셋을 학습 서버로 보냄. 앱에서 `sparkq` 대기열에 학습을
+걸고, π₀.₅·FastWAM·SmolVLA 실험의 손실 곡선과 체크포인트를 비교함. 학습된 정책은 팔이 붙은
+콘솔 서버로 가져와 실행하거나, 큰 모델은 Spark에서 추론하면서 팔·카메라·안전 제어를 콘솔에
+남김. 실행 중에는 시행을 기록해 물체의 시작 위치별 성공률을 확인할 수 있음.
+
 **[ai-worker-humanoid-challenge](https://github.com/sesepark/ai-worker-humanoid-challenge)** — 휴머노이드 챌린지 Mission A (팀 프로젝트)  
 ROBOTIS AI Worker 기반 팀 프로젝트에서 **텔레오퍼레이션 오퍼레이터 스테이션**을 담당함
 (전체 90커밋 중 70커밋). 영상 패널을 RViz 밖으로 분리해 X11에서 죽던 문제를 없애고, 손목
@@ -79,12 +87,12 @@ RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이�
 구성했고, 실제 상위 유입 지역이 전부 태국인 것으로 그 판단이 값을 함. (코드와 수집 데이터는
 비공개, 구조와 판단 근거만 공개)
 
-**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — Apple Silicon 개인 에이전트와 로봇 원격 콘솔  
+**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — Apple Silicon 개인 에이전트
+
 Swift 메뉴바 앱에서 메일·메시지·학교 공지를 **읽기 전용**으로 모아 브리핑하고, 음성 전사·문서
-인식·미디어 처리를 Mac의 모델과 도구로 처리함. 위 로봇 파이프라인 전체를 조작하고, 학습 서버의
-남는 GPU로 채팅하는 원격 콘솔이기도 함. 보안 경계를 관례가 아니라 코드로 강제한 점
-(전송·수정·삭제 API를 **아예 구현하지 않음**, 메시지 본문을 지시로 해석하지 않음, 쓰기 대상
-페이지 재검증)에 가장 공을 들임.
+인식·미디어 처리를 Mac의 모델과 도구로 처리함. 학습 서버의 남는 GPU로 채팅하는 화면도 있음.
+보안 경계를 관례가 아니라 코드로 강제한 점(메일·Slack 전송·수정·삭제 API를 **구현하지 않음**,
+메시지 본문을 지시로 해석하지 않음, 쓰기 대상 페이지 재검증)에 가장 공을 들임.
 
 **[shape-new-web](https://github.com/snuhumanoid/shape_new_web)** — SHAPE 공개 웹사이트이자 내부 운영 시스템  
 소개 페이지가 아니라 장비 예약·자격 검증·권한 위임·웹 푸시까지 동아리 운영이 실제로 돌아가는
