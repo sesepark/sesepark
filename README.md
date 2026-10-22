@@ -1,131 +1,57 @@
-## 박세환 · Sehwan Park
+# 박세환 · Sehwan Park
 
-서울대학교 자유전공학부 25학번 · 전기정보공학부 전공 · 휴머노이드 로봇 팀 [SHAPE](https://github.com/snu-shape)
+서울대학교 자유전공학부 25학번 · 전기정보공학부 전공 · [SHAPE](https://github.com/snu-shape)
 
-로봇 원격조작으로 사람의 시연을 모으고 그 데이터로 정책을 학습시키는 파이프라인을 만들어 옴.
-팔과 카메라를 쥔 콘솔 서버, GPU 하나 앞의 학습 큐, 그 둘을 원격으로 조작하는 맥 앱까지 층별로
-직접 만들어 하나로 이었음. 웹 쪽에서는 월 활성 사용자 14만 명이 쓰는 서비스를 자택 리눅스
-서버에서 6개월째 혼자 운영 중임. 어느 쪽이든 데모가 아니라 **실제로 돌아가는 상태까지** 만들고
-유지하는 일을 함.
+로봇을 원격으로 조작하고, 사람의 시연을 모아 로봇이 배울 수 있게 만드는 일에 관심이 있습니다.
+SHAPE에서 휴머노이드 텔레오퍼레이션을 맡았고, 개인적으로는 로봇팔 제어부터 데이터 수집·학습까지 이어지는 도구를 만들고 있습니다.
 
-```mermaid
-flowchart LR
-    P["아이폰 · 맥 앱<br/>3D 팔을 끌면 진짜 팔이 따라옴"]
-    C["콘솔 서버<br/>soarm101-console"]
-    A(["SO-ARM101<br/>리더 · 팔로워 · 카메라 2대"])
-    D[("LeRobot 데이터셋<br/>30Hz · 서보 판독 10열")]
-    Q["학습 큐<br/>sparkq"]
-    G(["DGX Spark<br/>GB10 1장"])
-    M["학습된 정책"]
+[로봇 활동](#로봇-활동) · [기타 활동](#기타-활동) · [이메일](mailto:park7132872@snu.ac.kr)
 
-    P -- "SSH 터널 · 30Hz WebSocket" --> C
-    C -- "안전 사다리 통과분만" --> A
-    A -- 시연 --> D
-    D -- LAN 전송 --> Q
-    Q -- "한 번에 하나씩" --> G
-    G --> M
-    M -- 회수 --> C
-```
+## 로봇 활동
 
-<table>
-<tr>
-<td width="50%"><img src="docs/images/soarm-dataset.png" alt="수집한 시연을 에피소드 단위로 되돌려 보는 화면"></td>
-<td width="50%"><img src="docs/images/cookierunhub.png" alt="CookieRunHUB 조합 목록"></td>
-</tr>
-<tr>
-<td width="50%" align="center"><sub>찍은 시연을 되돌려 보는 화면 — 리더가 시킨 자리(점선)와 팔로워가 실제로 있던 자리(실선)</sub></td>
-<td width="50%" align="center"><sub>혼자 만들어 운영 중인 게임 정보 서비스 — 월 활성 14만 명</sub></td>
-</tr>
-</table>
+### SHAPE · 휴머노이드 챌린지
 
----
+ROBOTIS AI Worker를 사용하는 팀 프로젝트에서 **원격 조작 화면과 카메라·주행 제어**를 담당했습니다.
+영상 패널을 RViz에서 분리하고, 손목 카메라의 USB 대역폭 문제와 주행 명령의 조작 권한을 정리했습니다.
 
-### 로보틱스 · Physical AI
+→ [ai-worker-humanoid-challenge](https://github.com/sesepark/ai-worker-humanoid-challenge)
 
-**[soarm101-console](https://github.com/sesepark/soarm101-console)** — SO-ARM101 운영 콘솔과 원격 텔레옵 (64커밋)  
-팔과 카메라를 쥔 서버 쪽 전부. 물리 리더 없이 3D로 그린 팔을 끌어 조작하는 **가상 리더**를 만들어,
-맥과 아이폰에서 같은 화면으로 팔을 움직이게 함. 목표값은 서버의 안전 사다리(관절 한계 · 틱당
-변화량 · 부하 · 전류 · 추종오차 · 온도 · 워치독)를 통과해야 모터에 닿고, 조작 권한은 한 시점에
-한 기기만 가짐. 수집 데이터에는 위치 말고도 서보가 내주는 값 전부를 **원본 그대로** 별도 열로
-남김 — 나중에 모터 부하로 간접 촉각을 추정하려는 것이고, 시연은 다시 찍을 수 없기 때문임.
+### 로봇팔 원격조작과 데이터 수집
 
-**[xarm7-pi0-teleop](https://github.com/sesepark/xarm7-pi0-teleop)** — xArm7 텔레오퍼레이션 · pi0 데이터 수집 워크스페이스  
-GELLO 리더암과 스마트폰(WebXR)으로 xArm7을 조작하고, 시연을 LeRobot 데이터셋으로 기록해
-pi0(OpenPI) 정책을 학습·재생함. 리더암 엔코더의 초기 offset 오차가 FK 비선형성을 타고 endpoint
-오차로 새는 문제를, 절대 관절값 대신 팔로워 기준 관절에 리더 delta를 더한 "가상 관절"로 해결함.
-제어 루프(30Hz)가 네트워크 왕복 없이 돌도록 xArm7 순기구학을 직접 구현함.
-→ 텔레옵 구현은 [lerobot_robot_ufactory 기여분](https://github.com/sesepark/lerobot_robot_ufactory/tree/xarm7-gello-webxr) (upstream 대비 코드 14파일 / +1,811줄)
+SO-ARM101과 xArm7을 조작하며 시연을 수집하고, LeRobot·OpenPI로 학습·재생하는 작업을 하고 있습니다.
+수집한 시연을 확인하는 맥 앱, 팔과 카메라를 제어하는 콘솔, 학습 서버의 작업 큐를 연결했습니다.
 
-**[sparkq](https://github.com/sesepark/sparkq)** — DGX Spark의 GPU 하나 앞에 학습을 줄 세우는 작업 큐  
-희소 자원이 GB10 한 장이라 슬롯은 하나임. 통합메모리라 두 학습이 겹치면 OOM으로 깨지는 대신
-**둘 다 스왑으로 느려지는** 방식으로 망가지는데, 그쪽이 훨씬 알아채기 어려움. 그래서 앞 작업이
-끝났는지가 아니라 `nvidia-smi`에 컴퓨트 프로세스가 하나도 없는지를 보고 다음을 꺼냄. 표준
-라이브러리만 쓰고 상태는 전부 파일임.
+![로봇 시연 영상과 관절 움직임을 함께 확인하는 화면](docs/images/soarm-dataset.png)
 
-**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — 시연 확인부터 Spark 학습·정책 실행까지 잇는 맥 앱
+<sub>직접 만든 맥 앱의 데이터 검토 화면. 시연 영상과 리더·팔로워의 관절 움직임을 함께 확인합니다.</sub>
 
-SO-ARM101에서 찍은 시연을 회차별 영상과 관절 곡선으로 확인하고, 수집 속도·중복 프레임·추종
-오차 같은 품질 지표를 본 뒤 데이터셋을 학습 서버로 보냄. 앱에서 `sparkq` 대기열에 학습을
-걸고, π₀.₅·FastWAM·SmolVLA 실험의 손실 곡선과 체크포인트를 비교함. 학습된 정책은 팔이 붙은
-콘솔 서버로 가져와 실행하거나, 큰 모델은 Spark에서 추론하면서 팔·카메라·안전 제어를 콘솔에
-남김. 실행 중에는 시행을 기록해 물체의 시작 위치별 성공률을 확인할 수 있음.
+| 프로젝트 | 하는 일 |
+| --- | --- |
+| [SO-ARM101 Console](https://github.com/sesepark/soarm101-console) | 브라우저·폰에서 로봇팔 조작, 카메라 확인, 시연 수집. 물리 리더 없이 3D 팔로 조작하는 모드도 구현했습니다. |
+| [xArm7 Teleop](https://github.com/sesepark/xarm7-pi0-teleop) | GELLO 리더암·휴대폰으로 xArm7을 조작하고, pi0 학습용 시연을 수집하는 실험 환경입니다. |
+| [sparkq](https://github.com/sesepark/sparkq) | DGX Spark와 Mac에서 GPU 작업을 순서대로 실행하고 진행 상황을 확인하는 큐입니다. |
 
-**[ai-worker-humanoid-challenge](https://github.com/sesepark/ai-worker-humanoid-challenge)** — 휴머노이드 챌린지 Mission A (팀 프로젝트)  
-ROBOTIS AI Worker 기반 팀 프로젝트에서 **텔레오퍼레이션 오퍼레이터 스테이션**을 담당함
-(전체 90커밋 중 70커밋). 영상 패널을 RViz 밖으로 분리해 X11에서 죽던 문제를 없애고, 손목
-RealSense의 USB 대역 포화를 잡고, ZED 뎁스 어시스트 오버레이와 주행 패널·cmd_vel mux를 구성함.
+주로 **ROS 2 · LeRobot · OpenPI · Python · PyTorch**를 사용합니다.
+
+## 기타 활동
+
+### CookieRunHUB
+
+쿠키런의 조합과 공략을 찾고 공유하는 [게임 정보 서비스](https://www.cookierunhub.com)를 혼자 개발·운영하고 있습니다.
+한국어·영어·태국어를 지원하며, 자택 리눅스 서버에서 배포와 장애 복구까지 관리합니다.
+기존 분석 기록의 월 활성 사용자는 약 14만 명입니다(2026년 8월 기준).
+
+![CookieRunHUB의 게임 조합 목록](docs/images/cookierunhub.png)
+
+<sub>게임 조합을 찾아 비교하는 화면. [공개 개발 기록](https://github.com/sesepark/cookierunhub-docs)에 구조와 운영 경험을 정리했습니다.</sub>
+
+| 활동 | 내용 |
+| --- | --- |
+| [SHAPE Web](https://github.com/sesepark/shape-new-web) | 동아리 웹사이트와 장비 예약·회원 관리 시스템을 개발했습니다. |
+| [서울대 로컬 에이전트](https://github.com/sesepark/snu-local-agent) | 과제·공지 브리핑, 녹음 전사, 문서 도구를 묶은 학업용 공개 앱입니다. |
+| [샤모아](https://github.com/sesepark/shamoa-snu-programs) | 흩어진 서울대 해외 프로그램 공지를 모아 탐색·추천하는 수업 프로젝트입니다. |
+| [오픈소스 기여](https://github.com/headroomlabs-ai/headroom/pull/3331) | Headroom에서 터미널 종료 후 프록시가 남는 문제를 수정하고 재현 테스트를 추가했습니다. |
 
 ---
 
-### 시스템 · 서비스 개발
-
-**[cookierunhub-docs](https://github.com/sesepark/cookierunhub-docs)** — 게임 정보 서비스 (단독 개발·운영)  
-6개월간 혼자 설계·개발·운영 중인 3개국어 웹서비스의 엔지니어링 기록. **월 활성 사용자 14만 명**,
-728커밋 / 약 21.8만 줄 / DB 마이그레이션 156개. 관리형 플랫폼이 아니라 자택 리눅스 서버에서
-돌리기 때문에 **blue-green 무중단 배포와 10초 주기 health 기반 자동 장애 복구를 직접 구현**함.
-사용자 게시글까지 번역해야 해서 로케일 파일이 아니라 DB 스키마와 번역 워커로 파이프라인을
-구성했고, 실제 상위 유입 지역이 전부 태국인 것으로 그 판단이 값을 함. (코드와 수집 데이터는
-비공개, 구조와 판단 근거만 공개)
-
-**[seoul-local-agent](https://github.com/sesepark/seoul-local-agent)** — Apple Silicon 개인 에이전트
-
-Swift 메뉴바 앱에서 메일·메시지·학교 공지를 **읽기 전용**으로 모아 브리핑하고, 음성 전사·문서
-인식·미디어 처리를 Mac의 모델과 도구로 처리함. 학습 서버의 남는 GPU로 채팅하는 화면도 있음.
-보안 경계를 관례가 아니라 코드로 강제한 점(메일·Slack 전송·수정·삭제 API를 **구현하지 않음**,
-메시지 본문을 지시로 해석하지 않음, 쓰기 대상 페이지 재검증)에 가장 공을 들임.
-
-**[shape-new-web](https://github.com/snuhumanoid/shape_new_web)** — SHAPE 공개 웹사이트이자 내부 운영 시스템  
-소개 페이지가 아니라 장비 예약·자격 검증·권한 위임·웹 푸시까지 동아리 운영이 실제로 돌아가는
-자리를 웹으로 옮긴 것. 프런트·백엔드·스키마·배포를 단독 개발함. 가장 많은 고민이 들어간 부분은
-**전부 무료 티어 위에서 돌아가게 만드는 것**이었고, Neon 요금이 질의 횟수가 아니라 *깨어 있는
-시간*이라 2단 캐시의 창 길이를 맞추는 식으로 풀었음. 현재는 교육 로드맵과 자료실을 분리하고,
-장비 예약·회원 관리 흐름을 모바일에서도 쓸 수 있게 다듬었음. → [www.snu-shape.com](https://www.snu-shape.com)
-
-**[shamoa-snu-programs](https://github.com/sesepark/shamoa-snu-programs)** — 서울대 해외 프로그램 탐색·추천 앱 (수업 최종 프로젝트)  
-
----
-
-### 오픈소스 기여
-
-**[headroom](https://github.com/headroomlabs-ai/headroom)** — AI 에이전트용 컨텍스트 압축 레이어 (라이브러리 · 프록시 · MCP)  
-[PR #3331](https://github.com/headroomlabs-ai/headroom/pull/3331) — 2026년 9월 25일 `main`에 머지  
-터미널을 닫으면 SIGTERM이 아니라 **SIGHUP**이 오는데, `claude` 경로만 이 신호를 처리하고
-나머지 도구(codex, aider, cursor 등)가 공유하는 두 경로는 처리하지 않았음. 그래서 래퍼가
-`finally: cleanup()`을 실행하지 못한 채 죽고, 프록시가 PID 1로 재부모화되어 포트를 붙든 채
-남았음. 코드를 읽다 찾은 게 아니라 **8일 19시간째 살아 있던 유출 프록시**에서 출발했고, 소스
-문자열 매칭이 아니라 실제 자식 프로세스를 SIGHUP으로 종료시켜 누수를 재현하는 테스트를 함께 넣음.
-
----
-
-### 주로 쓰는 것
-
-로봇 · ROS 2 / MoveIt / RealSense · ZED / LeRobot / OpenPI(pi0) / Isaac Lab / xArm SDK / Feetech SDK  
-학습 · PyTorch / MLX / LoRA 파인튜닝  
-백엔드 · Python · FastAPI · SQLAlchemy · PostgreSQL · Alembic  
-프론트 · TypeScript · Next.js · React · three.js  
-인프라 · Docker · Caddy · systemd · GitHub Actions · 자체 리눅스 서버 운영  
-그 외 · Swift · Kotlin
-
----
-
-📮 park7132872@snu.ac.kr
+[park7132872@snu.ac.kr](mailto:park7132872@snu.ac.kr)
