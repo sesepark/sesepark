@@ -14,7 +14,7 @@
 ### 팀 프로젝트
 
 - **[SHAPE-UP G1](https://github.com/sesepark/g1-project)**<br>
-  Unitree G1·NVIDIA SONIC 팀 프로젝트에서 Spark 시뮬레이션, 조작 콘솔과 ROS 2 연동·검증을 맡고 있습니다. 공개 저장소에 담당 작업과 시뮬레이션 시연을 정리했습니다.
+  Unitree G1·NVIDIA SONIC을 활용해 시뮬레이션 환경, 조작 콘솔, ROS 2 연동과 실물 원격조작까지 직접 구현했습니다. 개발 과정과 시연을 공개 저장소에 정리했습니다.
 
 - **[AI Worker 휴머노이드 챌린지](https://github.com/sesepark/ai-worker-humanoid-challenge)**<br>
   ROBOTIS AI Worker 팀 프로젝트에서 원격 조작 화면, 카메라 연동, 주행 패널과 리더암 제어를 담당했습니다.
