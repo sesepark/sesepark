@@ -31,7 +31,7 @@ I'm part of [SHAPE](https://github.com/snu-shape), a humanoid robotics team, whe
 I review datasets and manage experiments in a personal Mac app I built.
 My main tools are ROS 2, LeRobot, OpenPI, Python, and PyTorch.
 
-## Other Activities
+## Web & App Development
 
 - **[CookieRunHUB](https://www.cookierunhub.com) · [Engineering notes](https://github.com/sesepark/cookierunhub-docs)**<br>
   I independently develop and operate a game information service in Korean, English, and Thai. It had approximately 140,000 monthly active users in August 2026. I also manage deployment and recovery on my home Linux server.
@@ -41,6 +41,9 @@ My main tools are ROS 2, LeRobot, OpenPI, Python, and PyTorch.
   A publicly available study app combining assignment and announcement briefings, audio transcription, and document tools.
 - **[Shamoa](https://github.com/sesepark/shamoa-snu-programs)**<br>
   A course project that brings together SNU overseas program announcements for browsing and recommendations.
+
+## Other Activities
+
 - **[Open-source contribution](https://github.com/headroomlabs-ai/headroom/pull/3331)**<br>
   Fixed a Headroom issue where the proxy remained running after the terminal closed, and added a regression test.
 
