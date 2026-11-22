@@ -13,6 +13,9 @@ I'm part of [SHAPE](https://github.com/snu-shape), a humanoid robotics team, whe
 
 ### Team Projects
 
+- **[MAICON 2026](https://github.com/sesepark/MAICON_2026_AirTiger) — 1st Overall · Minister of National Defense Award (최우수상)**<br>
+  Our team, Air Tiger (에어타이거), won all six matches at the 2026 Military AI Competition finals. I developed LiDAR ICP-based localization, path planning, and obstacle avoidance, validated relocalization using recordings from the competition arena, and designed the ROS 2 node architecture and development interfaces.
+
 - **[SHAPE-UP G1](https://github.com/sesepark/g1-project)**<br>
   Built the simulation environment, operator console, ROS 2 integration, and teleoperation on the physical robot using Unitree G1 and NVIDIA SONIC. Development notes and demos are available in the public repository.
 
