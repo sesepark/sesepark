@@ -17,7 +17,7 @@ I'm part of [SHAPE](https://github.com/snu-shape), a humanoid robotics team, whe
   Our team, Air Tiger (에어타이거), won all six matches at the 2026 Military AI Competition finals. I developed LiDAR ICP-based localization, path planning, and obstacle avoidance, validated relocalization using recordings from the competition arena, and designed the ROS 2 node architecture and development interfaces.
 
 - **[SHAPE-UP G1](https://github.com/sesepark/2026-2-shape-up-g1)**<br>
-  Developing G1 Airpots with the team: a phone- and AirPods-based motion-capture interface for Unitree G1, combining sensor synchronization and calibration, IMUCoCo pose estimation, G1 retargeting, and live NVIDIA SONIC control. Validated the live pipeline in MuJoCo and demonstrated right-arm teleoperation on a gantry-supported physical G1 using one iPhone (November 21, 2026).
+  Developing a phone-based motion-capture interface with the team for Unitree G1, combining sensor synchronization and calibration, IMUCoCo pose estimation, G1 retargeting, and live NVIDIA SONIC control. Validated the live pipeline in MuJoCo and demonstrated right-arm teleoperation on a gantry-supported physical G1 using one iPhone (November 21, 2026).
 
 - **[AI Worker Humanoid Challenge](https://github.com/sesepark/ai-worker-humanoid-challenge)**<br>
   Developed the teleoperation interface, camera integration, mobile base control panel, and leader-arm control for our team's ROBOTIS AI Worker project.
